@@ -29,8 +29,7 @@ export default function LandingPage() {
       {/* Header */}
       <header className="landing-header">
         <div className="header-logo">
-          <span className="logo-badge">LEAP</span>
-          <span className="logo-text">Academy</span>
+          <img src="/leap-logo.png" alt="Leap Academy" className="logo-img" />
         </div>
         <div className="header-trust">
           <span>⭐⭐⭐⭐⭐</span>

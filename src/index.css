@@ -64,6 +64,18 @@ a {
   text-decoration: none;
 }
 
+/* Logo */
+.logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.logo-img-light {
+  filter: brightness(0) invert(1);
+  height: 40px;
+}
+
 button {
   cursor: pointer;
   border: none;

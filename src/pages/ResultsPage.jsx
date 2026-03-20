@@ -94,8 +94,7 @@ function LoadingScreen({ firstName }) {
     <div className="loading-screen">
       <div className="loading-content">
         <div className="loading-logo">
-          <span className="logo-badge">LEAP</span>
-          <span className="logo-text" style={{ color: 'var(--cream)' }}>Academy</span>
+          <img src="/leap-logo.png" alt="Leap Academy" className="logo-img logo-img-light" />
         </div>
         <div className="loading-spinner">
           <svg width="64" height="64" viewBox="0 0 64 64">
@@ -242,8 +241,7 @@ export default function ResultsPage({ quizData }) {
       {/* Header */}
       <header className="results-header">
         <div className="header-logo">
-          <span className="logo-badge">LEAP</span>
-          <span className="logo-text">Academy</span>
+          <img src="/leap-logo.png" alt="Leap Academy" className="logo-img" />
         </div>
         <a href={BOOK_CALL_URL} target="_blank" rel="noopener noreferrer" className="header-cta-btn">
           Book Your Strategy Call →

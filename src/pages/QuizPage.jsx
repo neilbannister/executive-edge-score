@@ -282,8 +282,7 @@ export default function QuizPage({ onComplete }) {
 
       <header className="quiz-header">
         <div className="header-logo">
-          <span className="logo-badge">LEAP</span>
-          <span className="logo-text">Academy</span>
+          <img src="/leap-logo.png" alt="Leap Academy" className="logo-img" />
         </div>
         <div className="header-title">The Executive Edge Score</div>
       </header>
