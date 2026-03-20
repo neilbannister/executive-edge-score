@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RESULT_TIERS, QUESTIONS } from '../data/quizData';
 import { fetchPersonalizedContent } from '../api/personalize';
+import { buildPersonalizedContent } from '../data/personalizeContent';
 import './ResultsPage.css';
 
 // ─── ANIMATED SCORE COUNTER ─────────────────────────────────────────────────
@@ -203,15 +204,18 @@ export default function ResultsPage({ quizData }) {
     return <LoadingScreen firstName={firstName} />;
   }
 
-  // ─── Merge AI content with static fallbacks ──────────────────────────────
+  // ─── Merge AI content with personalized static fallbacks ─────────────────
   const staticLetter = typeof tierData.ilanaLetter === 'function'
     ? tierData.ilanaLetter(firstName, answers)
     : '';
 
-  const displayHeroMessage = aiContent?.heroMessage || tierData.heroMessage;
+  // Build deeply personalized static content (uses answers + scores)
+  const personalizedStatic = buildPersonalizedContent(tierData, firstName, answers, subScores, overallScore);
+
+  const displayHeroMessage = aiContent?.heroMessage || personalizedStatic.heroMessage;
   const displayLetter = aiContent?.ilanaLetter || staticLetter;
-  const displayOpportunityCost = aiContent?.opportunityCost || tierData.opportunityCost;
-  const displayActionPlan = aiContent?.actionPlan || tierData.actionPlan;
+  const displayOpportunityCost = aiContent?.opportunityCost || personalizedStatic.opportunityCost;
+  const displayActionPlan = aiContent?.actionPlan || personalizedStatic.actionPlan;
 
   const letter = displayLetter;
 
