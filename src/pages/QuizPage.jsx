@@ -53,15 +53,14 @@ export default function QuizPage({ onComplete }) {
     if (isTransitioning) return;
     const q = currentQuestion;
     setSelectedOption(value);
-    const feedback = q.feedback[value];
-    setCurrentFeedback(feedback);
 
     const newAnswers = { ...answers, [q.id]: value };
     setAnswers(newAnswers);
 
+    // Auto-advance after brief selection highlight
     setTimeout(() => {
-      setShowFeedback(true);
-    }, 300);
+      proceedToNext();
+    }, 400);
   };
 
   const proceedToNext = () => {
@@ -155,18 +154,6 @@ export default function QuizPage({ onComplete }) {
           ))}
         </div>
 
-        {showFeedback && currentFeedback && (
-          <div className="feedback-card">
-            <div className="feedback-icon">💡</div>
-            <p className="feedback-text">{currentFeedback}</p>
-            <button className="btn-next" onClick={proceedToNext}>
-              Continue
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </button>
-          </div>
-        )}
       </div>
     );
   };
