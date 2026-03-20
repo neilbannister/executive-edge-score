@@ -138,7 +138,7 @@ export const RESULT_TIERS = {
     label: 'Brand Builder',
     incomeRange: 'Under $70K – $99K',
     tagline: 'Your talent is invisible — and that\'s the only thing holding you back.',
-    color: '#c9a84c',
+    color: '#d6b65f',
     heroMessage: "Your Executive Edge Score reveals something important: your skills and ambition are significantly outpacing how the world sees you. This is fixable — and fast.",
     vslUrl: 'https://www.youtube.com/embed/YOUR_VSL_BRAND_BUILDER',
     podcastEpisodes: [

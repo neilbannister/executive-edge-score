@@ -46,7 +46,7 @@ function ScoreRing({ score, size = 140, strokeWidth = 10, color, delay = 0 }) {
 
   return (
     <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(10,10,15,0.06)" strokeWidth={strokeWidth} />
+      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(0,0,0,0.06)" strokeWidth={strokeWidth} />
       <circle
         cx={size / 2} cy={size / 2} r={radius}
         fill="none"
@@ -99,7 +99,7 @@ function LoadingScreen({ firstName }) {
         </div>
         <div className="loading-spinner">
           <svg width="64" height="64" viewBox="0 0 64 64">
-            <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(201,168,76,0.15)" strokeWidth="4" />
+            <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(214,182,95,0.15)" strokeWidth="4" />
             <circle
               cx="32" cy="32" r="28" fill="none" stroke="var(--gold)" strokeWidth="4"
               strokeDasharray="176" strokeDashoffset="132" strokeLinecap="round"
@@ -226,7 +226,7 @@ export default function ResultsPage({ quizData }) {
     authority: { label: 'Opportunity Radar', icon: '🎯', desc: 'Your ability to attract, recognise, and convert high-value opportunities.' },
   };
 
-  const scoreColor = (s) => s >= 70 ? '#2d7a5a' : s >= 50 ? '#c9a84c' : '#8b2d2d';
+  const scoreColor = (s) => s >= 70 ? '#2d7a5a' : s >= 50 ? '#d6b65f' : '#8b2d2d';
   const scoreLabel = (s) => s >= 75 ? 'Strong' : s >= 55 ? 'Developing' : s >= 40 ? 'Needs Focus' : 'Critical Gap';
 
   const BOOK_CALL_URL = 'https://www.leapacademy.com/strategy-call';

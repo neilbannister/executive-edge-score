@@ -15,8 +15,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(214, 182, 95, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214, 182, 95, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
@@ -24,7 +24,7 @@
   position: absolute;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(214, 182, 95, 0.08) 0%, transparent 70%);
   top: -100px;
   left: 50%;
   transform: translateX(-50%);
@@ -338,7 +338,7 @@
 }
 
 .text-input::placeholder {
-  color: rgba(10, 10, 15, 0.35);
+  color: rgba(0, 0, 0, 0.35);
 }
 
 .privacy-note {
