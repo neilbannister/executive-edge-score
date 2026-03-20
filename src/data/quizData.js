@@ -665,10 +665,9 @@ Founder, Leap Academy`,
 
 export function calculateResults(answers) {
   const incomeAnswer = answers.income;
-  
+
   let tier = 'basic_branding';
-  if (incomeAnswer === 'A') tier = 'basic_branding';
-  else if (incomeAnswer === 'B') tier = 'basic_branding';
+  if (incomeAnswer === 'A' || incomeAnswer === 'B') tier = 'basic_branding';
   else if (incomeAnswer === 'C') tier = 'confidence_boost';
   else if (incomeAnswer === 'D') tier = 'leadership_dev';
   else if (incomeAnswer === 'E') tier = 'executive_presence';
@@ -676,37 +675,87 @@ export function calculateResults(answers) {
   else if (incomeAnswer === 'G') tier = 'portfolio_career';
   else if (incomeAnswer === 'H') tier = 'scaling_business';
 
-  // Calculate sub-scores
-  const traitCounts = { brand: 0, confidence: 0, leadership: 0, authority: 0 };
-  let totalTraitAnswers = 0;
+  // Base scores start at 50 for each dimension
+  const scores = { brand: 50, confidence: 50, leadership: 50, authority: 50 };
+  const answerPosition = { A: 0, B: 1, C: 2, D: 3 };
 
-  QUESTIONS.slice(0, 6).forEach(q => {
-    const answer = answers[q.id];
-    if (answer) {
-      const option = q.options.find(o => o.value === answer);
-      if (option?.trait) {
-        traitCounts[option.trait]++;
-        totalTraitAnswers++;
-      }
+  const getTrait = (qIndex, answer) =>
+    QUESTIONS[qIndex].options.find(o => o.value === answer)?.trait;
+
+  // ─── WEAKNESS QUESTIONS ──────────────────────────────────────────
+  // Selecting a trait here means it's an area of need → penalize it
+
+  // Q1: "Which area do you need the MOST growth in?" (biggest weakness)
+  if (answers.growth_area) {
+    const trait = getTrait(0, answers.growth_area);
+    if (trait) {
+      scores[trait] -= 18;
+      Object.keys(scores).forEach(t => { if (t !== trait) scores[t] += 4; });
     }
-  });
+  }
 
-  // Score each trait (higher = stronger)
-  const brandScore = Math.round(40 + (traitCounts.brand / Math.max(totalTraitAnswers, 1)) * 40 + Math.random() * 15);
-  const confidenceScore = Math.round(35 + (traitCounts.confidence / Math.max(totalTraitAnswers, 1)) * 40 + Math.random() * 15);
-  const leadershipScore = Math.round(45 + (traitCounts.leadership / Math.max(totalTraitAnswers, 1)) * 35 + Math.random() * 15);
-  const authorityScore = Math.round(30 + (traitCounts.authority / Math.max(totalTraitAnswers, 1)) * 40 + Math.random() * 15);
+  // Q3: "What professional development are you most interested in?" (need)
+  if (answers.development_interest) {
+    const trait = getTrait(2, answers.development_interest);
+    if (trait) {
+      scores[trait] -= 12;
+      Object.keys(scores).forEach(t => { if (t !== trait) scores[t] += 3; });
+    }
+  }
 
-  const clamp = (n) => Math.min(95, Math.max(25, n));
+  // Q4: "Biggest career aspiration?" (want it because you don't have it)
+  if (answers.aspiration) {
+    const trait = getTrait(3, answers.aspiration);
+    if (trait) {
+      scores[trait] -= 8;
+      Object.keys(scores).forEach(t => { if (t !== trait) scores[t] += 2; });
+    }
+  }
+
+  // ─── PROGRESSIVE QUESTIONS ───────────────────────────────────────
+  // A = lowest/earliest stage, D = highest/most advanced
+  // These measure current state — higher answers lift all scores
+
+  // Q2: "How do you currently position yourself in the job market?"
+  if (answers.market_position) {
+    const pos = answerPosition[answers.market_position] ?? 1;
+    const trait = getTrait(1, answers.market_position);
+    const lift = [-10, -3, 5, 14][pos];
+    Object.keys(scores).forEach(t => { scores[t] += lift; });
+    if (trait) scores[trait] += 5;
+  }
+
+  // Q5: "Which best describes your current professional network?"
+  if (answers.network) {
+    const pos = answerPosition[answers.network] ?? 1;
+    const trait = getTrait(4, answers.network);
+    const lift = [-8, -2, 6, 15][pos];
+    Object.keys(scores).forEach(t => { scores[t] += lift; });
+    if (trait) scores[trait] += 4;
+  }
+
+  // Q6: "How do you typically respond to new opportunities?"
+  if (answers.opportunity_response) {
+    const pos = answerPosition[answers.opportunity_response] ?? 1;
+    const trait = getTrait(5, answers.opportunity_response);
+    const lift = [-10, -4, 6, 14][pos];
+    Object.keys(scores).forEach(t => { scores[t] += lift; });
+    if (trait) scores[trait] += 5;
+  }
+
+  // Clamp all scores to 20–95
+  const clamp = (n) => Math.min(95, Math.max(20, Math.round(n)));
 
   const subScores = {
-    brand: clamp(brandScore),
-    confidence: clamp(confidenceScore),
-    leadership: clamp(leadershipScore),
-    authority: clamp(authorityScore),
+    brand: clamp(scores.brand),
+    confidence: clamp(scores.confidence),
+    leadership: clamp(scores.leadership),
+    authority: clamp(scores.authority),
   };
 
-  const overallScore = Math.round((subScores.brand + subScores.confidence + subScores.leadership + subScores.authority) / 4);
+  const overallScore = Math.round(
+    (subScores.brand + subScores.confidence + subScores.leadership + subScores.authority) / 4
+  );
 
   return { tier, subScores, overallScore };
 }
