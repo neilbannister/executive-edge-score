@@ -210,7 +210,7 @@ export default function ResultsPage({ quizData }) {
     : '';
 
   // Build deeply personalized static content (uses answers + scores)
-  const personalizedStatic = buildPersonalizedContent(tierData, firstName, answers, subScores, overallScore);
+  const personalizedStatic = buildPersonalizedContent(tierData, firstName, answers, subScores, overallScore, quizData.jobRole || '');
 
   const displayHeroMessage = aiContent?.heroMessage || personalizedStatic.heroMessage;
   const displayLetter = aiContent?.ilanaLetter || staticLetter;
@@ -230,6 +230,11 @@ export default function ResultsPage({ quizData }) {
   const scoreLabel = (s) => s >= 75 ? 'Strong' : s >= 55 ? 'Developing' : s >= 40 ? 'Needs Focus' : 'Critical Gap';
 
   const BOOK_CALL_URL = 'https://www.leapacademy.com/strategy-call';
+
+  // Detect entrepreneur/business owner for language adaptation
+  const entrepreneurKeywords = ['entrepreneur', 'founder', 'co-founder', 'cofounder', 'business owner', 'owner', 'ceo', 'chief executive', 'self-employed', 'freelancer', 'consultant', 'solopreneur', 'startup', 'managing director', 'proprietor', 'partner', 'principal', 'creator'];
+  const jobRoleLower = (quizData.jobRole || '').toLowerCase().trim();
+  const isEntrepreneurUser = entrepreneurKeywords.some(kw => jobRoleLower.includes(kw));
 
   return (
     <div className="results-page">
@@ -328,7 +333,7 @@ export default function ResultsPage({ quizData }) {
                 {QUESTIONS.slice(0, 6).map((q) => {
                   const answer = answers[q.id];
                   const option = q.options.find(o => o.value === answer);
-                  const feedback = q.feedback?.[answer];
+                  const feedback = (isEntrepreneurUser && q.entrepreneurFeedback?.[answer]) || q.feedback?.[answer];
                   if (!answer || !feedback) return null;
                   return (
                     <div key={q.id} className="recap-item">
@@ -396,10 +401,12 @@ export default function ResultsPage({ quizData }) {
             <div className="vsl-label">Free Training for {tierData.label}s</div>
             <h2 className="section-title">
               The Exact Steps {firstName} Needs to<br />
-              <em>Leap to the Next Level</em>
+              <em>{isEntrepreneurUser ? 'Scale to the Next Level' : 'Leap to the Next Level'}</em>
             </h2>
             <p className="section-subtitle">
-              Ilana has handpicked this training specifically for professionals at your level and income band. Watch it before your strategy call.
+              {isEntrepreneurUser
+                ? 'Ilana has handpicked this training specifically for business owners and founders at your level. Watch it before your strategy call.'
+                : 'Ilana has handpicked this training specifically for professionals at your level and income band. Watch it before your strategy call.'}
             </p>
 
             <div className="vsl-frame-wrapper">
@@ -442,12 +449,17 @@ export default function ResultsPage({ quizData }) {
                   In 45 minutes, you'll leave with the exact 3-step plan to go from where you are to where you deserve to be. No fluff. No pitch. Just the most actionable strategy session you've had this year.
                 </p>
                 <ul className="cta-bullets">
-                  {[
+                  {(isEntrepreneurUser ? [
+                    `A complete audit of your Executive Edge — what's working and exactly what isn't`,
+                    `Your personalised "${tierData.label}" growth roadmap for the next 90 days`,
+                    `The specific strategies that have helped Leap clients scale their businesses and attract premium opportunities`,
+                    `Clarity on whether Leap Academy is the right next step for ${firstName}`,
+                  ] : [
                     `A complete audit of your Executive Edge — what's working and exactly what isn't`,
                     `Your personalised "${tierData.label}" roadmap for the next 90 days`,
                     `The specific moves that have helped Leap clients achieve $50K–$150K+ income jumps`,
                     `Clarity on whether Leap Academy is the right next step for ${firstName}`,
-                  ].map((b, i) => (
+                  ]).map((b, i) => (
                     <li key={i}>
                       <span className="bullet-check" style={{ color: tierData.color }}>✓</span>
                       {b}
@@ -580,7 +592,7 @@ export default function ResultsPage({ quizData }) {
         <div className="container">
           <div className={`cta-banner ${isVisible('cta2') ? 'visible' : ''}`} style={{ '--tier-color': tierData.color }}>
             <div className="banner-left">
-              <h3>Ready to turn your {tierData.label} score into your biggest career leap yet?</h3>
+              <h3>Ready to turn your {tierData.label} score into your biggest {isEntrepreneurUser ? 'business breakthrough' : 'career leap'} yet?</h3>
               <p>{firstName}, your strategy call is completely free. Spots fill within 24 hours.</p>
             </div>
             <a href={BOOK_CALL_URL} target="_blank" rel="noopener noreferrer" className="cta-button-main cta-banner-btn">
@@ -764,18 +776,20 @@ export default function ResultsPage({ quizData }) {
             </h2>
 
             <p className="final-cta-desc">
-              Your Executive Edge Score reveals significant untapped potential. The strategy call is how we turn your score into a concrete, step-by-step plan — built specifically for your situation, your industry, and your goals.
+              {isEntrepreneurUser
+                ? 'Your Executive Edge Score reveals significant untapped potential for your business. The strategy call is how we turn your score into a concrete, step-by-step growth plan — built specifically for your business, your market, and your goals.'
+                : 'Your Executive Edge Score reveals significant untapped potential. The strategy call is how we turn your score into a concrete, step-by-step plan — built specifically for your situation, your industry, and your goals.'}
             </p>
 
             <div className="final-cta-what-you-get">
               <h4>In your 45-minute strategy call, you'll get:</h4>
               <div className="final-bullets-grid">
                 {[
-                  { icon: '🎯', text: 'A full audit of your Executive Edge Score and what it means for your next move' },
+                  { icon: '🎯', text: `A full audit of your Executive Edge Score and what it means for your next ${isEntrepreneurUser ? 'growth phase' : 'move'}` },
                   { icon: '📋', text: `Your personalised ${tierData.label} Blueprint — the exact steps for your next 90 days` },
-                  { icon: '💼', text: 'The hidden market strategies Leap clients use to access $300K–$1M+ roles' },
+                  { icon: '💼', text: isEntrepreneurUser ? 'The strategies Leap clients use to scale their businesses, attract premium clients, and build market authority' : 'The hidden market strategies Leap clients use to access $300K–$1M+ roles' },
                   { icon: '🌐', text: 'Access to Leap\'s 100K+ professional network and how to leverage it immediately' },
-                  { icon: '📈', text: 'Salary and income negotiation tactics used by clients to achieve $50K–$150K+ jumps' },
+                  { icon: '📈', text: isEntrepreneurUser ? 'Revenue growth and business scaling tactics used by founder clients to multiply their impact' : 'Salary and income negotiation tactics used by clients to achieve $50K–$150K+ jumps' },
                   { icon: '🔥', text: `An honest answer on whether Leap Academy is the right next step for ${firstName}` },
                 ].map((b, i) => (
                   <div key={i} className="final-bullet">

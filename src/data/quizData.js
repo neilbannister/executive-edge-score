@@ -16,6 +16,12 @@ export const QUESTIONS = [
       B: "Confidence is the hidden currency of every boardroom. The leaders you admire? They built it deliberately, not naturally.",
       C: "Leadership at the top looks nothing like what most people were taught. The gap between good managers and transformational leaders is almost always strategic, not technical.",
       D: "Authority compounds faster than almost any other career asset. Once you're known, doors open without you knocking.",
+    },
+    entrepreneurFeedback: {
+      A: "For business owners, your personal brand IS your business's growth engine. The founders who build intentionally attract clients, partners, and opportunities on autopilot.",
+      B: "Confidence as a founder directly impacts your pricing, your pitches, and your ability to attract top talent. The most successful entrepreneurs built it deliberately.",
+      C: "As a business owner, leadership isn't about managing up — it's about inspiring your team, your clients, and your market. The gap between good founders and iconic ones is strategic, not technical.",
+      D: "Authority is the ultimate competitive moat for a business owner. Once you're the recognized expert in your market, clients come to you — and competitors can't replicate it.",
     }
   },
   {
@@ -33,6 +39,12 @@ export const QUESTIONS = [
       B: "Being partially visible is often the most frustrating position — you know your value but the right people don't see it yet. This is exactly the gap Leap Academy closes.",
       C: "Recognized leadership is powerful — the next step is turning recognition into magnetic pull, where opportunities seek you out.",
       D: "Known authorities generate 3–5x more inbound opportunities than equally talented professionals. The question is whether your authority is converting into income.",
+    },
+    entrepreneurFeedback: {
+      A: "Starting fresh is actually an advantage — you get to build your brand and your business's reputation with intention, not by accident.",
+      B: "Being partially visible is the most frustrating position for a business owner — you know your value but your ideal clients don't see it yet. This is exactly the gap Leap Academy closes.",
+      C: "Being recognized as a leader in your market is powerful — the next step is turning that recognition into a magnetic pull that attracts premium clients and partners to your business.",
+      D: "Known authorities in their market generate 3–5x more inbound business than equally talented founders. The question is whether your authority is converting into revenue.",
     }
   },
   {
@@ -50,6 +62,12 @@ export const QUESTIONS = [
       B: "Personal development at the executive level isn't soft — it's the hardest, most high-leverage work you'll ever do. The leaders who invest here see the fastest results.",
       C: "The difference between a $200K leader and a $500K leader is almost never technical skill. It's strategic leadership presence — and it can be built systematically.",
       D: "Speaking and writing authority is the fastest path to becoming the person everyone recommends. Ilana's clients have used this to land board seats, speaking stages, and advisory roles.",
+    },
+    entrepreneurFeedback: {
+      A: "The founders commanding the highest revenues and best clients are almost always the ones with the strongest personal brands. Your brand is your business's most scalable asset.",
+      B: "Personal development as a founder isn't soft — it's the hardest, most high-leverage work you'll ever do. The business owners who invest here see the fastest growth.",
+      C: "The difference between a struggling business and a thriving one is almost never the product. It's the founder's ability to lead with strategic presence — and it can be built systematically.",
+      D: "Speaking and writing authority is the fastest path to becoming the go-to expert in your market. Ilana's clients have used this to attract premium clients, secure partnerships, and dominate their niche.",
     }
   },
   {
@@ -67,6 +85,12 @@ export const QUESTIONS = [
       B: "Income and visibility are directly linked — Leap clients in your position have seen salary jumps of $50K–$150K within months of implementing the right strategies.",
       C: "Stepping into leadership is a science, not luck. The exact pathway — from visibility to credibility to opportunity — is what Leap Academy maps out for you.",
       D: "Scaling a career or business is almost always a brand problem before it's a strategy problem. Once you're known for the right thing, scale becomes inevitable.",
+    },
+    entrepreneurFeedback: {
+      A: "Building a recognizable founder brand in the next 12–24 months is not only achievable — Leap Academy clients have done exactly this, generating massive revenue growth as a result.",
+      B: "Revenue and visibility are directly linked — Leap clients who are founders have seen dramatic business growth within months of implementing the right brand strategies.",
+      C: "Becoming the recognized authority in your market is a science, not luck. The exact pathway — from visibility to credibility to market dominance — is what Leap Academy maps out for founders.",
+      D: "Scaling a business is almost always a brand problem before it's a strategy problem. Once you're known for the right thing, scale becomes inevitable.",
     }
   },
   {
@@ -84,6 +108,12 @@ export const QUESTIONS = [
       B: "An expanding network is exponentially more powerful than most people realise — one strategic connection in finance or tech can change your trajectory completely.",
       C: "A strong industry network is a powerful foundation. The next step is building cross-functional and cross-industry reach that creates optionality others don't have.",
       D: "An influential network is a force multiplier. The question is whether you're systematically converting that network into income, opportunities, and legacy.",
+    },
+    entrepreneurFeedback: {
+      A: "Network is the most underrated business asset. Leap Academy gives you access to 100K+ curated connections — including potential clients, partners, and investors — and a systematic way to activate them.",
+      B: "An expanding network is exponentially more powerful for business owners — one strategic connection can unlock a partnership, a client, or a funding opportunity that changes everything.",
+      C: "A strong industry network is a powerful foundation for your business. The next step is building cross-industry reach that creates referral pipelines and partnership opportunities others don't have.",
+      D: "An influential network is a force multiplier for any business. The question is whether you're systematically converting those connections into revenue, partnerships, and market authority.",
     }
   },
   {
@@ -101,6 +131,12 @@ export const QUESTIONS = [
       B: "Needing more confidence before acting is incredibly common at the highest levels. The executives you admire don't feel more certain — they've just built the habits and frameworks that let them act anyway.",
       C: "Goal-aligned opportunity selection is a sign of strategic maturity. The next level is creating a pipeline of inbound opportunities so you're always choosing, never waiting.",
       D: "Actively pursuing multiple opportunities is a power move — the question is whether your brand is strong enough to convert them at the rate your talent deserves.",
+    },
+    entrepreneurFeedback: {
+      A: "Hesitation as a founder almost always comes from one thing: not having a clear, compelling narrative about your unique value in the market. That's fixable — and fast.",
+      B: "Needing more confidence before acting is incredibly common among business owners. The founders you admire don't feel more certain — they've just built the habits and frameworks that let them act anyway.",
+      C: "Goal-aligned opportunity selection is a sign of strategic maturity as a founder. The next level is building a brand that generates a constant pipeline of inbound clients and opportunities.",
+      D: "Actively pursuing multiple opportunities is a power move for any founder — the question is whether your brand is strong enough to convert them into clients and partnerships at the rate your expertise deserves.",
     }
   },
   {

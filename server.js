@@ -26,8 +26,10 @@ CRITICAL: The person's job role is one of your most important inputs. Use it to 
 - If they are mid-management: focus on breaking through to senior leadership, executive presence, strategic thinking vs tactical execution
 - If they are senior management/VP: focus on C-suite readiness, board visibility, building authority at scale, thought leadership
 - If they are C-suite/executive: focus on legacy, industry influence, scaling impact beyond their org, portfolio career, speaking/media
-- If they are a business owner/entrepreneur/founder: focus on personal brand as business asset, attracting investors/partners/talent, scaling beyond founder-dependency, building authority in their market
-- Use their specific job title language — mirror their world. A "Head of Product" gets different advice than a "Founder & CEO" even at similar income levels.
+- If they are a business owner/entrepreneur/founder/freelancer/consultant/self-employed: This is EXTREMELY IMPORTANT — these people are NOT looking to climb a corporate ladder or step into a leadership role. They ALREADY lead their own business. NEVER use language like "step into a leadership role", "get promoted", "salary increase", "career ladder", "next role", "hiring managers", "recruiters", or "corporate" for these people. Instead focus ENTIRELY on: growing their business revenue, attracting premium clients, building market authority, scaling beyond founder-dependency, attracting investors/partners/talent, becoming the recognized expert in their market, generating inbound leads through personal brand, and building a business that works without them.
+- Use their specific job title language — mirror their world. A "Head of Product" gets different advice than a "Founder & CEO" even at similar income levels. An "Entrepreneur" gets completely different framing than a "VP of Engineering" — one is building a business, the other is climbing within one.
+
+ABSOLUTE RULE FOR ENTREPRENEURS/FOUNDERS/BUSINESS OWNERS: Do NOT reference promotions, salary negotiations, job searches, career ladders, stepping into roles, getting hired, or corporate advancement. These people own their business — talk about business growth, market positioning, revenue, client attraction, scaling, and building authority as a founder.
 
 Guidelines:
 - heroMessage: 2-3 sentences. Directly addresses the person by name. Specific to their scores, tier, AND job role. Reveals an insight about their pattern. Should feel like a personal diagnosis, not a generic statement. Reference their role naturally.
@@ -35,7 +37,9 @@ Guidelines:
 - opportunityCost: Object with headline (string, compelling and specific to their role + situation), financialGap (string like "$120K+"), timeframe (string like "over the next 3 years"), closingLine (string, italic-worthy closing that creates urgency), milestones (array of exactly 4 objects each with icon (single emoji), title (short string), description (1-2 sentences specific to their tier, role, and answers)). The opportunity cost should reflect what someone at THEIR career level and role is leaving on the table.
 - actionPlan: Array of exactly 3 objects each with title (string, specific action tailored to their role), detail (2-3 sentences, highly specific and actionable — reference their job role, specific answers, and what someone in their position should do differently), urgency (string like "This Week", "Next 30 Days", etc).
 
-Match the tone and quality of the reference content provided. Be MORE specific to this person's answers and role than the reference — never generic. Every sentence should feel like it was written for THIS person in THIS role.`;
+Match the tone and quality of the reference content provided. Be MORE specific to this person's answers and role than the reference — never generic. Every sentence should feel like it was written for THIS person in THIS role.
+
+FINAL CHECK: Before returning your response, re-read the person's job role. If they are ANY type of business owner, entrepreneur, founder, freelancer, or self-employed professional, scan your ENTIRE response and remove ANY reference to: promotions, salary negotiations, stepping into roles, career ladders, hiring managers, recruiters, getting hired, or corporate advancement. Replace with business-appropriate language about revenue growth, client attraction, market authority, scaling, and founder brand building.`;
 
 // ─── Personalization Endpoint ───────────────────────────────────────────────
 
