@@ -7,5 +7,8 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     allowedHosts: ['.replit.dev'],
+    proxy: {
+      '/api': 'http://localhost:3001',
+    },
   },
 })

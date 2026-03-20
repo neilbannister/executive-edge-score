@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "express": "^5.2.1",
+    "framer-motion": "^11.0.6",
+    "openai": "^6.32.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0",
-    "framer-motion": "^11.0.6"
+    "react-router-dom": "^6.22.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

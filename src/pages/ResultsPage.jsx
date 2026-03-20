@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RESULT_TIERS, QUESTIONS } from '../data/quizData';
+import { fetchPersonalizedContent } from '../api/personalize';
 import './ResultsPage.css';
 
 // ─── ANIMATED SCORE COUNTER ─────────────────────────────────────────────────
@@ -70,14 +71,110 @@ function SectionDivider({ label }) {
   );
 }
 
+// ─── LOADING SCREEN ─────────────────────────────────────────────────────────
+function LoadingScreen({ firstName }) {
+  const [messageIndex, setMessageIndex] = useState(0);
+  const messages = [
+    `Ilana is reviewing your answers, ${firstName}...`,
+    'Crafting your personalized results...',
+    'Analyzing your Executive Edge pattern...',
+    'Building your custom action plan...',
+    'Almost ready...',
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMessageIndex(prev => (prev + 1) % messages.length);
+    }, 2800);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="loading-screen">
+      <div className="loading-content">
+        <div className="loading-logo">
+          <span className="logo-badge">LEAP</span>
+          <span className="logo-text" style={{ color: 'var(--cream)' }}>Academy</span>
+        </div>
+        <div className="loading-spinner">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(201,168,76,0.15)" strokeWidth="4" />
+            <circle
+              cx="32" cy="32" r="28" fill="none" stroke="var(--gold)" strokeWidth="4"
+              strokeDasharray="176" strokeDashoffset="132" strokeLinecap="round"
+              className="loading-ring"
+            />
+          </svg>
+        </div>
+        <p className="loading-message">{messages[messageIndex]}</p>
+        <p className="loading-sub">This takes a few seconds</p>
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN RESULTS PAGE ──────────────────────────────────────────────────────
 export default function ResultsPage({ quizData }) {
   const { firstName, answers, overallScore, subScores, tier } = quizData;
   const tierData = RESULT_TIERS[tier];
   const [sectionsVisible, setSectionsVisible] = useState({});
   const observerRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [aiContent, setAiContent] = useState(null);
 
+  // ─── Fetch AI-personalized content ───────────────────────────────────────
   useEffect(() => {
+    const loadPersonalizedContent = async () => {
+      try {
+        // Build answer labels for the prompt
+        const answerLabels = {};
+        QUESTIONS.forEach(q => {
+          const answer = answers[q.id];
+          if (answer) {
+            const option = q.options.find(o => o.value === answer);
+            answerLabels[q.id] = option?.label || answer;
+          }
+        });
+
+        // Build tier context for reference
+        const staticLetter = typeof tierData.ilanaLetter === 'function'
+          ? tierData.ilanaLetter(firstName, answers)
+          : '';
+
+        const tierContext = {
+          label: tierData.label,
+          incomeRange: tierData.incomeRange,
+          heroMessage: tierData.heroMessage,
+          ilanaLetterText: staticLetter,
+          opportunityCost: tierData.opportunityCost,
+          actionPlan: tierData.actionPlan,
+        };
+
+        const result = await fetchPersonalizedContent({
+          firstName,
+          answers,
+          answerLabels,
+          tier,
+          overallScore,
+          subScores,
+          tierContext,
+        });
+
+        setAiContent(result);
+      } catch (err) {
+        console.warn('AI personalization failed, using static content:', err.message);
+        // aiContent stays null — fallback to static
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadPersonalizedContent();
+  }, []);
+
+  // ─── Intersection Observer (runs after loading completes) ────────────────
+  useEffect(() => {
+    if (isLoading) return;
     window.scrollTo(0, 0);
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -89,15 +186,34 @@ export default function ResultsPage({ quizData }) {
       },
       { threshold: 0.08 }
     );
-    document.querySelectorAll('[data-section]').forEach(el => observerRef.current.observe(el));
-    return () => observerRef.current?.disconnect();
-  }, []);
+    // Small delay to ensure DOM is painted
+    const t = setTimeout(() => {
+      document.querySelectorAll('[data-section]').forEach(el => observerRef.current.observe(el));
+    }, 100);
+    return () => {
+      clearTimeout(t);
+      observerRef.current?.disconnect();
+    };
+  }, [isLoading]);
 
   const isVisible = (id) => !!sectionsVisible[id];
 
-  const letter = typeof tierData.ilanaLetter === 'function'
+  // ─── Show loading screen while AI content generates ──────────────────────
+  if (isLoading) {
+    return <LoadingScreen firstName={firstName} />;
+  }
+
+  // ─── Merge AI content with static fallbacks ──────────────────────────────
+  const staticLetter = typeof tierData.ilanaLetter === 'function'
     ? tierData.ilanaLetter(firstName, answers)
     : '';
+
+  const displayHeroMessage = aiContent?.heroMessage || tierData.heroMessage;
+  const displayLetter = aiContent?.ilanaLetter || staticLetter;
+  const displayOpportunityCost = aiContent?.opportunityCost || tierData.opportunityCost;
+  const displayActionPlan = aiContent?.actionPlan || tierData.actionPlan;
+
+  const letter = displayLetter;
 
   const subScoreLabels = {
     brand: { label: 'Brand Power', icon: '🏛️', desc: 'How visible and compelling your professional brand is to decision-makers.' },
@@ -161,7 +277,7 @@ export default function ResultsPage({ quizData }) {
               </div>
               <div className="score-meta">
                 <div className="score-title-text">Executive Edge Score</div>
-                <p className="score-hero-message">{tierData.heroMessage}</p>
+                <p className="score-hero-message">{displayHeroMessage}</p>
               </div>
             </div>
 
@@ -237,20 +353,20 @@ export default function ResultsPage({ quizData }) {
           <div className={`opp-cost-inner ${isVisible('oppcost') ? 'visible' : ''}`}>
             <div className="opp-cost-eyebrow">⏳ The Cost of Standing Still</div>
             <h2 className="opp-cost-headline">
-              {firstName}, {tierData.opportunityCost.headline}
+              {firstName}, {displayOpportunityCost.headline}
             </h2>
 
             <div className="opp-cost-financial-card">
               <div className="opp-cost-amount" style={{ color: tierData.color }}>
-                {tierData.opportunityCost.financialGap}
+                {displayOpportunityCost.financialGap}
               </div>
               <div className="opp-cost-timeframe">
-                estimated income left on the table {tierData.opportunityCost.timeframe}
+                estimated income left on the table {displayOpportunityCost.timeframe}
               </div>
             </div>
 
             <div className="opp-cost-milestones-grid">
-              {tierData.opportunityCost.milestones.map((m, i) => (
+              {displayOpportunityCost.milestones.map((m, i) => (
                 <div key={i} className="opp-cost-milestone">
                   <span className="opp-cost-milestone-icon">{m.icon}</span>
                   <div className="opp-cost-milestone-content">
@@ -261,7 +377,7 @@ export default function ResultsPage({ quizData }) {
               ))}
             </div>
 
-            <p className="opp-cost-closing">{tierData.opportunityCost.closingLine}</p>
+            <p className="opp-cost-closing">{displayOpportunityCost.closingLine}</p>
           </div>
         </div>
       </section>
@@ -428,7 +544,7 @@ export default function ResultsPage({ quizData }) {
             </p>
 
             <div className="action-steps">
-              {tierData.actionPlan.map((step, i) => (
+              {displayActionPlan.map((step, i) => (
                 <div key={i} className="action-step">
                   <div className="step-number-block" style={{ background: tierData.color }}>
                     <span className="step-number">{i + 1}</span>
