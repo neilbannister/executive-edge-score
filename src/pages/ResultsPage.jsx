@@ -227,6 +227,45 @@ export default function ResultsPage({ quizData }) {
         </div>
       </section>
 
+      <SectionDivider label="Your Opportunity Cost" />
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 1B: OPPORTUNITY COST
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="opp-cost-section" data-section="oppcost" style={{ '--tier-color': tierData.color }}>
+        <div className="container">
+          <div className={`opp-cost-inner ${isVisible('oppcost') ? 'visible' : ''}`}>
+            <div className="opp-cost-eyebrow">⏳ The Cost of Standing Still</div>
+            <h2 className="opp-cost-headline">
+              {firstName}, {tierData.opportunityCost.headline}
+            </h2>
+
+            <div className="opp-cost-financial-card">
+              <div className="opp-cost-amount" style={{ color: tierData.color }}>
+                {tierData.opportunityCost.financialGap}
+              </div>
+              <div className="opp-cost-timeframe">
+                estimated income left on the table {tierData.opportunityCost.timeframe}
+              </div>
+            </div>
+
+            <div className="opp-cost-milestones-grid">
+              {tierData.opportunityCost.milestones.map((m, i) => (
+                <div key={i} className="opp-cost-milestone">
+                  <span className="opp-cost-milestone-icon">{m.icon}</span>
+                  <div className="opp-cost-milestone-content">
+                    <h4 className="opp-cost-milestone-title">{m.title}</h4>
+                    <p className="opp-cost-milestone-desc">{m.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="opp-cost-closing">{tierData.opportunityCost.closingLine}</p>
+          </div>
+        </div>
+      </section>
+
       <SectionDivider label="Your Personalised Training" />
 
       {/* ═══════════════════════════════════════════════════════════════════

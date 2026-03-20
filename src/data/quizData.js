@@ -195,7 +195,19 @@ Founder, Leap Academy`,
         detail: "Publish one LinkedIn post, article, or speak up in one meeting or industry forum this week. Show your thinking. Authority is built in public, one contribution at a time.",
         urgency: "Week 3"
       }
-    ]
+    ],
+    opportunityCost: {
+      headline: "What staying invisible is costing you",
+      financialGap: "$80K+",
+      timeframe: "over the next 3 years",
+      closingLine: "Every month you wait is another month the right people don't know you exist.",
+      milestones: [
+        { icon: "👁️", title: "Visibility to Decision-Makers", description: "The hiring managers and recruiters at top firms can't find you — because your brand doesn't exist yet." },
+        { icon: "🤝", title: "Warm Referrals & Introductions", description: "Without a recognizable brand, your network can't advocate for you in rooms you're not in." },
+        { icon: "📈", title: "Promotions You Don't Know About", description: "High-value roles are filled before they're posted. Invisible professionals never hear about them." },
+        { icon: "💰", title: "Higher-Paying Opportunities", description: "Professionals with strong personal brands earn 20–40% more than equally skilled peers without one." }
+      ]
+    }
   },
 
   confidence_boost: {
@@ -260,7 +272,19 @@ Founder, Leap Academy`,
         detail: "Create a running document of every win, compliment, and positive outcome in your career. Reference it before every high-stakes meeting. Confidence is rebuilt on evidence, and you have more than you think.",
         urgency: "Ongoing"
       }
-    ]
+    ],
+    opportunityCost: {
+      headline: "What playing it safe is costing you",
+      financialGap: "$120K+",
+      timeframe: "over the next 3 years",
+      closingLine: "The gap between where you are and where you could be isn't talent — it's confidence. And every day you wait, it compounds.",
+      milestones: [
+        { icon: "🎤", title: "Speaking & Thought Leadership Spots", description: "Confident professionals get invited to panels, podcasts, and stages. Hesitation keeps you in the audience." },
+        { icon: "🚀", title: "Leadership Roles You're Qualified For", description: "You have the skills for the next level — but without the confidence to pursue it, someone less qualified will." },
+        { icon: "💼", title: "High-Stakes Negotiations", description: "Every raise you don't ask for and every opportunity you don't pursue is money left on the table — permanently." },
+        { icon: "🌐", title: "Strategic Network Expansion", description: "Confidence opens doors to rooms where careers are made. Without it, your network stays small and safe." }
+      ]
+    }
   },
 
   leadership_dev: {
@@ -323,7 +347,19 @@ Founder, Leap Academy`,
         detail: "Start sharing strategic opinions on industry trends on LinkedIn once a week. Executives don't just execute — they lead thought. This single habit has helped Leap clients secure speaking invitations, board seats, and C-suite opportunities.",
         urgency: "Starting Now"
       }
-    ]
+    ],
+    opportunityCost: {
+      headline: "What blending in at the top is costing you",
+      financialGap: "$200K+",
+      timeframe: "over the next 3 years",
+      closingLine: "At your level, the difference between a $200K career and a $400K career is almost never skill — it's strategic visibility.",
+      milestones: [
+        { icon: "👔", title: "C-Suite & Senior Promotions", description: "The executives who get promoted aren't just performing — they're strategically visible to the people who make those decisions." },
+        { icon: "🏛️", title: "Advisory & Board Opportunities", description: "Board seats and advisory roles go to leaders with a clear public brand — not the best-kept secrets." },
+        { icon: "📡", title: "Inbound Recruiter Interest", description: "Top-tier recruiters headhunt branded leaders. Without visibility, you're applying — not being pursued." },
+        { icon: "🎯", title: "Industry Influence & Authority", description: "Your peers who are less talented but more visible are shaping your industry's future. That could be you." }
+      ]
+    }
   },
 
   executive_presence: {
@@ -386,7 +422,19 @@ Founder, Leap Academy`,
         detail: "At your level, the most valuable connections are cross-industry — investors, board members, operators from adjacent sectors. Identify 3 non-obvious, high-influence people to build relationships with over the next quarter.",
         urgency: "This Quarter"
       }
-    ]
+    ],
+    opportunityCost: {
+      headline: "What an unarchitected brand is costing you",
+      financialGap: "$350K+",
+      timeframe: "over the next 3 years",
+      closingLine: "At $260K–$450K, you're already exceptional. But the leaders earning $750K+ in your peer group aren't more talented — they're more deliberately positioned.",
+      milestones: [
+        { icon: "👑", title: "C-Suite Trajectory", description: "The path to CEO, CTO, or CFO requires more than performance — it requires a brand that makes you the obvious choice." },
+        { icon: "🏦", title: "Board Seats & Equity Stakes", description: "Companies offering board compensation and equity choose leaders with market-facing authority. Invisible executives don't get the call." },
+        { icon: "🌍", title: "Global Speaking & Media Features", description: "Forbes, HBR, and top-tier conference stages are filled by leaders who've built public authority. Your expertise qualifies you — your brand doesn't yet." },
+        { icon: "📊", title: "Portfolio Income Streams", description: "Consulting retainers, advisory fees, and speaking income go to known authorities. At your level, this could add $100K–$200K+ annually." }
+      ]
+    }
   },
 
   authority_building: {
@@ -449,7 +497,19 @@ Founder, Leap Academy`,
         detail: "One keynote speech at the right conference can generate more opportunities than a year of LinkedIn posting. Define your signature talk — the one idea only you can deliver from your unique vantage point — and pitch it to 5 relevant events.",
         urgency: "Next Quarter"
       }
-    ]
+    ],
+    opportunityCost: {
+      headline: "What unmonetized authority is costing you",
+      financialGap: "$500K+",
+      timeframe: "over the next 3 years",
+      closingLine: "You've built the expertise. You've earned the credibility. But without deliberate authority architecture, you're leaving half a million dollars of opportunity on the table.",
+      milestones: [
+        { icon: "📚", title: "Intellectual Property Revenue", description: "Your frameworks, insights, and methodologies are worth millions — but only if they're packaged and positioned for the market." },
+        { icon: "🏢", title: "Equity & Advisory Compensation", description: "Companies pay $50K–$200K+ for advisory board members with real authority. Without a public brand, you're not in their consideration set." },
+        { icon: "🎙️", title: "Paid Speaking & Media Income", description: "Keynote speakers at your level command $15K–$50K per engagement. Without a signature platform, these fees go to less experienced but better-branded peers." },
+        { icon: "🔗", title: "Deal Flow & Partnership Access", description: "The most lucrative partnerships, JVs, and acquisition opportunities flow to known authorities. Anonymity at your level is extraordinarily expensive." }
+      ]
+    }
   },
 
   portfolio_career: {
@@ -510,7 +570,19 @@ Founder, Leap Academy`,
         detail: "A professional website, a refined LinkedIn presence, and a clearly articulated expertise narrative are the foundation of a portfolio career. These aren't vanity — they're the mechanism by which opportunities find you while you sleep.",
         urgency: "Next 30 Days"
       }
-    ]
+    ],
+    opportunityCost: {
+      headline: "What an unscaled brand is costing you",
+      financialGap: "$750K+",
+      timeframe: "over the next 3 years",
+      closingLine: "At $750K–$1M, every percentage point of brand leverage translates to six figures. The portfolio you're not building today is the freedom you won't have in three years.",
+      milestones: [
+        { icon: "🏗️", title: "Portfolio Architecture Income", description: "The gap between a single salary and a diversified portfolio of advisory, consulting, equity, and speaking income can exceed $500K annually." },
+        { icon: "💎", title: "Premium Consulting Retainers", description: "Branded authorities command $25K–$75K/month retainers. Without a public platform, you're competing on price instead of reputation." },
+        { icon: "📈", title: "Equity & Acquisition Opportunities", description: "The most valuable equity positions and acquisition deals go to people whose names are already known in the market." },
+        { icon: "🌐", title: "Global Influence & Scale", description: "Your expertise could reach millions through books, courses, and media — but only if your brand infrastructure supports it." }
+      ]
+    }
   },
 
   scaling_business: {
@@ -573,7 +645,19 @@ Founder, Leap Academy`,
         detail: "In 10 years, what do you want to be known for having built, changed, or created? Write it down today. Everything you do strategically from this point forward should connect back to this statement. Legacy is built backwards from the end, not forwards from today.",
         urgency: "This Weekend"
       }
-    ]
+    ],
+    opportunityCost: {
+      headline: "What unarchitected scale is costing you",
+      financialGap: "$1.5M+",
+      timeframe: "over the next 3 years",
+      closingLine: "At $1M+, the question isn't whether you can earn more — it's whether your brand is working as hard as you are. Right now, it isn't.",
+      milestones: [
+        { icon: "🏛️", title: "Legacy & Empire Building", description: "Without deliberate brand architecture, your impact dies when you stop working. The leaders you admire built systems that compound without them." },
+        { icon: "📖", title: "Content-to-Revenue Systems", description: "A single book, course, or methodology can generate $500K–$2M+ annually. Your intellectual capital is sitting idle without a monetization engine." },
+        { icon: "🌍", title: "Global Inbound Pipeline", description: "The world's highest-earning professionals don't chase opportunities — their brand generates a constant inbound flow. Yours should too." },
+        { icon: "⚡", title: "Leverage & Time Freedom", description: "Every hour you spend on work your brand should be doing is an hour stolen from strategy, family, and the life you've earned." }
+      ]
+    }
   }
 };
 
