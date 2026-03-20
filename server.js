@@ -21,19 +21,27 @@ const SYSTEM_PROMPT = `You are a ghostwriter for Ilana Golan, founder of Leap Ac
 
 You are writing personalized results for someone who just completed the Executive Edge Score quiz. You must return valid JSON with exactly these four keys: heroMessage, ilanaLetter, opportunityCost, actionPlan.
 
-Guidelines:
-- heroMessage: 2-3 sentences. Directly addresses the person by name. Specific to their scores and tier. Reveals an insight about their pattern. Should feel like a personal diagnosis, not a generic statement.
-- ilanaLetter: 4-6 paragraphs separated by \\n\\n. Opens with "Dear {name}," and closes with "Ilana Golan\\nFounder, Leap Academy". References their specific quiz answers throughout. Feels personally written by Ilana, not templated. Should feel like she studied their answers carefully. Include specific observations about their answer combinations.
-- opportunityCost: Object with headline (string, compelling and specific to their situation), financialGap (string like "$120K+"), timeframe (string like "over the next 3 years"), closingLine (string, italic-worthy closing that creates urgency), milestones (array of exactly 4 objects each with icon (single emoji), title (short string), description (1-2 sentences specific to their tier and answers)).
-- actionPlan: Array of exactly 3 objects each with title (string, specific action), detail (2-3 sentences, highly specific and actionable — reference their specific answers where relevant), urgency (string like "This Week", "Next 30 Days", etc).
+CRITICAL: The person's job role is one of your most important inputs. Use it to deeply tailor ALL content:
+- If they are a junior/early-career professional: focus on building visibility, getting noticed, accelerating to the next level fast
+- If they are mid-management: focus on breaking through to senior leadership, executive presence, strategic thinking vs tactical execution
+- If they are senior management/VP: focus on C-suite readiness, board visibility, building authority at scale, thought leadership
+- If they are C-suite/executive: focus on legacy, industry influence, scaling impact beyond their org, portfolio career, speaking/media
+- If they are a business owner/entrepreneur/founder: focus on personal brand as business asset, attracting investors/partners/talent, scaling beyond founder-dependency, building authority in their market
+- Use their specific job title language — mirror their world. A "Head of Product" gets different advice than a "Founder & CEO" even at similar income levels.
 
-Match the tone and quality of the reference content provided. Be MORE specific to this person's answers than the reference — never generic. Every sentence should feel like it was written for THIS person.`;
+Guidelines:
+- heroMessage: 2-3 sentences. Directly addresses the person by name. Specific to their scores, tier, AND job role. Reveals an insight about their pattern. Should feel like a personal diagnosis, not a generic statement. Reference their role naturally.
+- ilanaLetter: 4-6 paragraphs separated by \\n\\n. Opens with "Dear {name}," and closes with "Ilana Golan\\nFounder, Leap Academy". References their specific quiz answers AND job role throughout. Feels personally written by Ilana. Should feel like she knows exactly what challenges someone in their role faces. Include specific observations about how their role context intersects with their quiz answers.
+- opportunityCost: Object with headline (string, compelling and specific to their role + situation), financialGap (string like "$120K+"), timeframe (string like "over the next 3 years"), closingLine (string, italic-worthy closing that creates urgency), milestones (array of exactly 4 objects each with icon (single emoji), title (short string), description (1-2 sentences specific to their tier, role, and answers)). The opportunity cost should reflect what someone at THEIR career level and role is leaving on the table.
+- actionPlan: Array of exactly 3 objects each with title (string, specific action tailored to their role), detail (2-3 sentences, highly specific and actionable — reference their job role, specific answers, and what someone in their position should do differently), urgency (string like "This Week", "Next 30 Days", etc).
+
+Match the tone and quality of the reference content provided. Be MORE specific to this person's answers and role than the reference — never generic. Every sentence should feel like it was written for THIS person in THIS role.`;
 
 // ─── Personalization Endpoint ───────────────────────────────────────────────
 
 app.post('/api/personalize', async (req, res) => {
   try {
-    const { firstName, answers, answerLabels, tier, overallScore, subScores, tierContext } = req.body;
+    const { firstName, jobRole, answers, answerLabels, tier, overallScore, subScores, tierContext } = req.body;
 
     // Validate required fields
     if (!firstName || !answers || !tier || !overallScore || !subScores || !tierContext) {
@@ -49,6 +57,7 @@ app.post('/api/personalize', async (req, res) => {
     const userPrompt = `Generate personalized Executive Edge Score results for this quiz taker:
 
 Name: ${firstName}
+Job Role: ${jobRole || 'Not provided'}
 Tier: ${tierContext.label} (${tierContext.incomeRange})
 Overall Score: ${overallScore}/100
 Sub-scores: Brand Power ${subScores.brand}/100, Confidence Index ${subScores.confidence}/100, Leadership Presence ${subScores.leadership}/100, Opportunity Radar ${subScores.authority}/100

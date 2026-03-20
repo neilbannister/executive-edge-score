@@ -152,6 +152,7 @@ export default function ResultsPage({ quizData }) {
 
         const result = await fetchPersonalizedContent({
           firstName,
+          jobRole: quizData.jobRole || '',
           answers,
           answerLabels,
           tier,

@@ -4,12 +4,15 @@ import { QUESTIONS, calculateResults } from '../data/quizData';
 import './QuizPage.css';
 
 const NAME_STEP_INDEX = 1; // After question 0 (growth_area), ask name
+const JOB_ROLE_STEP_INDEX = 4; // After 2 more questions, ask job role
 
 export default function QuizPage({ onComplete }) {
   const navigate = useNavigate();
-  const [step, setStep] = useState(0); // 0 = Q1, then name step, then Q2 onwards
+  const [step, setStep] = useState(0);
   const [firstName, setFirstName] = useState('');
   const [nameInput, setNameInput] = useState('');
+  const [jobRole, setJobRole] = useState('');
+  const [jobRoleInput, setJobRoleInput] = useState('');
   const [answers, setAnswers] = useState({});
   const [selectedOption, setSelectedOption] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -18,19 +21,24 @@ export default function QuizPage({ onComplete }) {
   const [emailInput, setEmailInput] = useState('');
   const [phoneInput, setPhoneInput] = useState('');
   const nameRef = useRef(null);
+  const jobRoleRef = useRef(null);
 
-  // Map step to question index (accounting for name step at index 1)
+  // Map step to question index (accounting for name step at 1, job role step at 4)
   const getQuestionIndex = (s) => {
     if (s === 0) return 0;
     if (s === NAME_STEP_INDEX) return null; // name step
-    return s - 1; // steps after name are questions 1..N
+    if (s === JOB_ROLE_STEP_INDEX) return null; // job role step
+    // Steps 2-3 map to questions 1-2, steps 5+ map to questions 3+
+    if (s < JOB_ROLE_STEP_INDEX) return s - 1;
+    return s - 2; // subtract 2 for the two special steps (name + job role)
   };
 
-  const totalSteps = QUESTIONS.length + 1 + 2; // questions + name + email + phone
+  const totalSteps = QUESTIONS.length + 2 + 2; // questions + name + jobRole + email + phone
   const currentQuestionIndex = getQuestionIndex(step);
   const isNameStep = step === NAME_STEP_INDEX;
-  const isEmailStep = step === QUESTIONS.length + 1;
-  const isPhoneStep = step === QUESTIONS.length + 2;
+  const isJobRoleStep = step === JOB_ROLE_STEP_INDEX;
+  const isEmailStep = step === QUESTIONS.length + 2;
+  const isPhoneStep = step === QUESTIONS.length + 3;
   const currentQuestion = currentQuestionIndex !== null ? QUESTIONS[currentQuestionIndex] : null;
 
   // Progress: count answered questions + name
@@ -47,7 +55,10 @@ export default function QuizPage({ onComplete }) {
     if (isNameStep && nameRef.current) {
       setTimeout(() => nameRef.current?.focus(), 100);
     }
-  }, [isNameStep]);
+    if (isJobRoleStep && jobRoleRef.current) {
+      setTimeout(() => jobRoleRef.current?.focus(), 100);
+    }
+  }, [isNameStep, isJobRoleStep]);
 
   const handleAnswer = (value) => {
     if (isTransitioning) return;
@@ -78,6 +89,12 @@ export default function QuizPage({ onComplete }) {
     proceedToNext();
   };
 
+  const handleJobRoleSubmit = () => {
+    if (!jobRoleInput.trim()) return;
+    setJobRole(jobRoleInput.trim());
+    proceedToNext();
+  };
+
   const handleEmailSubmit = () => {
     proceedToNext();
   };
@@ -87,6 +104,7 @@ export default function QuizPage({ onComplete }) {
     const results = calculateResults(answers);
     onComplete({
       firstName: firstName || 'there',
+      jobRole: jobRole || '',
       answers,
       email: emailInput,
       phone: phoneInput,
@@ -183,6 +201,42 @@ export default function QuizPage({ onComplete }) {
             className="btn-next btn-next-full"
             onClick={handleNameSubmit}
             disabled={!nameInput.trim()}
+          >
+            Continue
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderJobRoleStep = () => (
+    <div className={`quiz-card ${isTransitioning ? 'transitioning' : ''}`}>
+      <div className="name-step">
+        <div className="name-step-icon">💼</div>
+        <h2 className="question-text">
+          What's your current or most recent job role, {firstName}?
+        </h2>
+        <p className="question-subtitle">
+          This helps us tailor your Executive Edge Score and action plan to your exact career level and context.
+        </p>
+        <div className="name-input-group">
+          <input
+            ref={jobRoleRef}
+            type="text"
+            className="text-input"
+            placeholder="e.g. Marketing Director, Founder & CEO, Senior Software Engineer"
+            value={jobRoleInput}
+            onChange={e => setJobRoleInput(e.target.value)}
+            onKeyDown={e => handleKeyDown(e, handleJobRoleSubmit)}
+            maxLength={100}
+          />
+          <button
+            className="btn-next btn-next-full"
+            onClick={handleJobRoleSubmit}
+            disabled={!jobRoleInput.trim()}
           >
             Continue
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -293,9 +347,10 @@ export default function QuizPage({ onComplete }) {
 
           <div className="quiz-content">
             {isNameStep && renderNameStep()}
+            {isJobRoleStep && renderJobRoleStep()}
             {isEmailStep && renderEmailStep()}
             {isPhoneStep && renderPhoneStep()}
-            {!isNameStep && !isEmailStep && !isPhoneStep && renderQuestion()}
+            {!isNameStep && !isJobRoleStep && !isEmailStep && !isPhoneStep && renderQuestion()}
           </div>
 
           {/* Reassurance */}
